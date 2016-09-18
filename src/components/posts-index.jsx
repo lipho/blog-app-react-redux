@@ -1,9 +1,26 @@
-import React from 'react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchPosts } from '../actions'
+import { Link } from 'react-router';
 
-const PostsIndex = (props) => {
-  return (
-    <div></div>
-  )
-};
+class PostsIndex extends Component {
+  componentWillMount() {
+    this.props.fetchPosts();
+  }
 
-export default PostsIndex;
+  render() {
+    return (
+      <div>
+        <div className="text-xs-right">
+          <Link to='/posts/new' className='btn btn-primary'>
+            Add A Post
+          </Link>
+        </div>
+        List of blog posts
+      </div>
+    );
+  }
+}
+
+
+export default connect(null, { fetchPosts })(PostsIndex);
