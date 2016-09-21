@@ -16,7 +16,6 @@ export const fetchPosts = () => {
 
 export const createPost = props => {
   const request = axios.post(`${ROOT_URL}/posts${API_KEY}`, props);
-
   return {
     type: CREATE_POSTS,
     payload: request
