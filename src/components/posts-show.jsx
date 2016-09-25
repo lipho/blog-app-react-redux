@@ -1,22 +1,37 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchPost } from '../actions'
+import { fetchPost, deletePost } from '../actions'
+import {Link} from 'react-router';
 
 class PostsShow extends Component {
   componentWillMount() {
     this.props.fetchPost(this.props.params.id)
   }
 
+  onDeleteClick() {
+    this.props.deletePost(this.props.params.id)
+  }
+
   render() {
-    console.log(this.props.post)
+    let {post} = this.props;
+    if (!this.props.post) {
+      return <div>Loading...</div>
+    }
     return (
-      <div>Show post {this.props.params.id}</div>
+      <div>
+        <button onClick={this.onDeleteClick.bind(this)}
+          className="btn btn-danger pull-xs-right">Delete Post</button>
+        <Link to={'/'}>Back</Link>
+        <h3>{post.title}</h3>
+        <h6>Categories: {post.categories}</h6>
+        <p>{post.content}</p>
+      </div>
     );
   }
-};
+}
 
 function mapStateToProps(state) {
  return {post: state.posts.post}
 }
 
-export default connect(mapStateToProps, {fetchPost})(PostsShow);
+export default connect(mapStateToProps, {fetchPost, deletePost})(PostsShow);
