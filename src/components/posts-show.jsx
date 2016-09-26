@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchPost, deletePost } from '../actions'
 import {Link} from 'react-router';
@@ -8,8 +8,16 @@ class PostsShow extends Component {
     this.props.fetchPost(this.props.params.id)
   }
 
+  static contextTypes = {
+    router: PropTypes.object
+  };
+
   onDeleteClick() {
-    this.props.deletePost(this.props.params.id)
+    this.props.deletePost(this.props.params.id).then(() => {
+      //blog post created, navigate the user to the index
+      // navigage by calling this.context.router.push {new path}
+      this.context.router.push('/');
+    })
   }
 
   render() {
